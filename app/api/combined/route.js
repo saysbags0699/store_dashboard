@@ -2,10 +2,9 @@ import { NextResponse } from 'next/server';
 
 export async function GET(request) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
     const [response1, response2] = await Promise.all([
-      fetch(`${baseUrl}/api/route1`),
-      fetch(`${baseUrl}/api/route2`)
+      fetch(`/api/route1`),
+      fetch(`/api/route2`)
     ]);
 
     if (!response1.ok) {
