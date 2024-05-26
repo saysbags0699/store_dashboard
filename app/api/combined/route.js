@@ -2,9 +2,12 @@ import { NextResponse } from 'next/server';
 
 export async function GET(request) {
   try {
+    const host = request.headers.get('host');
+    const protocol = host.startsWith('localhost') ? 'http' : 'https';
+
     const [response1, response2] = await Promise.all([
-      fetch(`/api/route1`),
-      fetch(`/api/route2`)
+      fetch(`${protocol}://${host}/api/route1`),
+      fetch(`${protocol}://${host}/api/route2`)
     ]);
 
     if (!response1.ok) {
