@@ -4,10 +4,11 @@ export async function GET(request) {
   try {
     const host = request.headers.get('host');
     const protocol = host.startsWith('localhost') ? 'http' : 'https';
+    const baseURL = `${protocol}://${host}`;
 
     const [response1, response2] = await Promise.all([
-      fetch(`${protocol}://${host}/api/route1`),
-      fetch(`${protocol}://${host}/api/route2`)
+      fetch(`${baseURL}/api/route1`, { headers: { 'Content-Type': 'application/json' } }),
+      fetch(`${baseURL}/api/route2`, { headers: { 'Content-Type': 'application/json' } })
     ]);
 
     if (!response1.ok) {
