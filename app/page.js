@@ -1,81 +1,96 @@
-"use client";
-import { useEffect, useState } from "react";
-import Image from "next/image";
+'use client'
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 
-export default function Home() {
+const CombinedDataComponent = () => {
   const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/api/fetch-data", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include", // Include credentials if needed
-        });
-
+        const response = await fetch('/api/combined');
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error('Network response was not ok');
         }
-
         const result = await response.json();
         setData(result);
       } catch (error) {
-        console.error("Fetch error:", error);
+        setError(error.message);
       }
     };
 
     fetchData();
   }, []);
 
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <div>
+      <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+        <thead className="bg-gray-50 dark:bg-gray-800">
           <tr>
-            <th scope="col" class="px-6 py-3">
-              Product name
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400"
+            >
+              Shop Name
             </th>
-            <th scope="col" class="px-6 py-3">
-              Color
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400"
+            >
+              Score
             </th>
-            <th scope="col" class="px-6 py-3">
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400"
+            >
               Category
             </th>
-            <th scope="col" class="px-6 py-3">
-              Price
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400"
+            >
+              Label
             </th>
-            <th scope="col" class="px-6 py-3">
-              Action
+            <th
+              scope="col"
+              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-gray-400"
+            >
+              Logo
             </th>
           </tr>
         </thead>
-        <tbody>
-          {data && (
-            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                {data.shop_name}
-              </th>
-              <td class="px-6 py-4">{data.score}</td>
-              <td class="px-6 py-4">{data.category}</td>
-              <td class="px-6 py-4">{data.label}</td>
-              <td class="px-6 py-4">
-                <Image src={data.logo} alt="Shop Logo" className="w-12 h-12" />
+        <tbody className="bg-white dark:bg-gray-900">
+          {[data.route1, data.route2].map((item, index) => (
+            <tr
+              key={index}
+              className={`border-b dark:border-gray-700 ${index % 2 === 0 ? 'bg-gray-50 dark:bg-gray-800' : ''}`}
+            >
+              <td className="px-6 py-4">
+                <Image src={item.logo.url_list[0]} alt="Shop Logo" width={48} height={48} className="w-12 h-12" />
               </td>
+              <td
+                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+              >
+                {item.shop_name}
+              </td>
+              <td className="px-6 py-4">{item.score}</td>
+              <td className="px-6 py-4">{item.category}</td>
+              <td className="px-6 py-4">{item.label}</td>
             </tr>
-          )}
+          ))}
         </tbody>
       </table>
     </div>
-
-    // <div>
-    //   <h1>Data from Backend:</h1>
-    //
-    // </div>
   );
-}
+};
+
+export default CombinedDataComponent;
