@@ -74,9 +74,9 @@ const CombinedDataComponent = () => {
               key={index}
               className={`border-b dark:border-gray-700 ${index % 2 === 0 ? 'bg-gray-50 dark:bg-gray-800' : ''}`}
             >
-              <td className="px-6 py-4">
+              {/* <td className="px-6 py-4">
                 <Image src={item.logo.url_list[0]} alt="Shop Logo" width={48} height={48} className="w-12 h-12" />
-              </td>
+              </td> */}
               <td
                 className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
               >
