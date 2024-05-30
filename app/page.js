@@ -41,7 +41,7 @@ const CombinedDataComponent = () => {
     <div>
       <div className="m-12 bg-gray-100 rounded-3xl">
         <table className="min-w-full  divide-y divide-gray-200 dark:divide-gray-700 rounded-3xl">
-          <thead className="bg-gray-50 dark:bg-gray-800 rounded-3xl">
+          <thead className="bg-gray-50 rounded-3xl">
             <tr>
               <th
                 scope="col"
