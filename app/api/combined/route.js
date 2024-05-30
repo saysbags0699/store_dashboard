@@ -27,9 +27,13 @@ export async function GET(request) {
       route2: data2
     };
 
-    return NextResponse.json(combinedData, { status: 200 });
+    const response = NextResponse.json(combinedData, { status: 200 });
+    response.headers.set('Cache-Control', 'public, max-age=3600, s-maxage=3600');
+    return response;
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const response = NextResponse.json({ error: error.message }, { status: 500 });
+    response.headers.set('Cache-Control', 'no-store');
+    return response;
   }
 }
