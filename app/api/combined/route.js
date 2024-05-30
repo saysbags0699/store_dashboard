@@ -7,8 +7,8 @@ export async function GET(request) {
     const baseURL = `${protocol}://${host}`;
 
     const [response1, response2] = await Promise.all([
-      fetch(`${baseURL}/api/teknohaus`, { headers: { 'Content-Type': 'application/json' } }),
-      fetch(`${baseURL}/api/magnezone`, { headers: { 'Content-Type': 'application/json' } })
+      fetch(`${baseURL}/api/magnezone`, { headers: { 'Content-Type': 'application/json' } }),
+      fetch(`${baseURL}/api/teknohaus`, { headers: { 'Content-Type': 'application/json' } })
     ]);
 
     if (!response1.ok) {
