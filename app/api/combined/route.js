@@ -27,7 +27,13 @@ export async function GET(request) {
       route2: data2
     };
 
-    return NextResponse.json(combinedData, { status: 200 });
+    // Tambahkan header Cache-Control: no-store
+    const headers = {
+      'Cache-Control': 'no-store',
+      'Content-Type': 'application/json'
+    };
+
+    return NextResponse.json(combinedData, { headers, status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: error.message }, { status: 500 });
